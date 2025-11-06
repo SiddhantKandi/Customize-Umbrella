@@ -1,30 +1,38 @@
-const addBtn = document.getElementById('add-btn');
-const taskInput = document.getElementById('task-input');
-const taskList = document.getElementById('task-list');
+const umbrellaImg = document.getElementById('umbrella-image');
+const colorCircles = document.querySelectorAll('.color-circle');
+const uploadBtn = document.getElementById('upload-btn');
+const logoInput = document.getElementById('logo-input');
 
-addBtn.addEventListener('click', addTask);
-taskList.addEventListener('click', handleTaskAction);
+colorCircles.forEach(circle => {
+  circle.addEventListener('click', () => {
+    const color = circle.dataset.color;
+    umbrellaImg.src = `public/${color}_umbrella.png`;
+  });
+});
 
-function addTask() {
-  const taskText = taskInput.value.trim();
-  if (taskText === '') {
-    alert('Please enter a task!');
-    return;
-  }
+uploadBtn.addEventListener('click', () => logoInput.click());
 
-  const li = document.createElement('li');
-  li.innerHTML = `
-    <span class="task">${taskText}</span>
-    <button class="delete-btn">Delete</button>
-  `;
-  taskList.appendChild(li);
-  taskInput.value = '';
-}
+logoInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-function handleTaskAction(e) {
-  if (e.target.classList.contains('delete-btn')) {
-    e.target.parentElement.remove();
-  } else if (e.target.classList.contains('task')) {
-    e.target.parentElement.classList.toggle('completed');
-  }
-}
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const logo = document.createElement('img');
+    logo.src = event.target.result;
+    logo.classList.add('logo-preview');
+
+    const existingLogo = document.querySelector('.logo-preview');
+    if (existingLogo) existingLogo.remove();
+
+    logo.style.position = 'absolute';
+    logo.style.width = '80px';
+    logo.style.top = '50%';
+    logo.style.left = '50%';
+    logo.style.transform = 'translate(-50%, -50%)';
+    logo.style.opacity = '0.85';
+    umbrellaImg.parentElement.style.position = 'relative';
+    umbrellaImg.parentElement.appendChild(logo);
+  };
+  reader.readAsDataURL(file);
+});

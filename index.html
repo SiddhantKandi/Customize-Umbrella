@@ -3,17 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple To-Do List</title>
+  <title>Custom Umbrella</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>📝 To-Do List</h1>
-    <div class="input-section">
-      <input type="text" id="task-input" placeholder="Add a new task..." />
-      <button id="add-btn">Add</button>
+  <div class="main-container">
+    <div class="umbrella-section">
+      <img id="umbrella-image" src="public/blue_umbrella.png" alt="Umbrella" />
     </div>
-    <ul id="task-list"></ul>
+
+    <div class="customization-section">
+      <h1>Custom Umbrella</h1>
+      <div class="color-options">
+        <div class="color-circle" data-color="blue" style="background:#009fe3;"></div>
+        <div class="color-circle" data-color="yellow" style="background:#ffcc00;"></div>
+        <!-- <div class="color-circle" data-color="red" style="background:#ff3b30;"></div>
+        <div class="color-circle" data-color="orange" style="background:#ff9500;"></div> -->
+        <div class="color-circle" data-color="pink" style="background:#ff2d55;"></div>
+      </div>
+       <div class="upload-section">
+           <p><strong>Customize your umbrella</strong></p>
+            <p class="upload-ins">
+              Upload a logo for an instant preview.<br>
+              .png and .jpg files only. Max file size is 5MB.
+            </p>
+
+            <button id="upload-btn">
+            <img src="public/upload-icon.png" alt="upload icon" class="upload-icon" />
+                UPLOAD LOGO
+            </button>
+            <input type="file" id="logo-input" accept="image/png, image/jpeg" hidden />
+        </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
