@@ -4,21 +4,18 @@ const colorCircles = document.querySelectorAll('.color-circle');
 const uploadBtn = document.getElementById('upload-btn');
 const logoInput = document.getElementById('logo-input');
 
-let currentColor = 'blue'; // default umbrella color
-let uploadedLogo = null;   // stores uploaded logo image (data URL)
+let currentColor = 'blue';
+let uploadedLogo = null;
 
-// === Show loader (hide umbrella + logo) ===
 function showLoader(color) {
   umbrellaImg.style.visibility = 'hidden';
   umbrellaLoader.style.visibility = 'visible';
   umbrellaLoader.style.filter = getColorFilter(color);
 
-  // Hide logo while loader is active
   const existingLogo = document.querySelector('.logo-preview');
   if (existingLogo) existingLogo.style.visibility = 'hidden';
 }
 
-// === Hide loader (show umbrella + logo if exists) ===
 function hideLoader() {
   umbrellaLoader.style.visibility = 'hidden';
   umbrellaImg.style.visibility = 'visible';
@@ -27,7 +24,6 @@ function hideLoader() {
   if (existingLogo) existingLogo.style.visibility = 'visible';
 }
 
-// === Handle color change ===
 colorCircles.forEach(circle => {
   circle.addEventListener('click', () => {
     const color = circle.dataset.color;
@@ -35,29 +31,30 @@ colorCircles.forEach(circle => {
 
     showLoader(color);
 
-    setTimeout(() => {
-      // Change umbrella image
-      umbrellaImg.src = `public/${color}_umbrella.png`;
+    
+    const newUmbrella = new Image();
+    newUmbrella.src = `public/${color}_umbrella.png`;
 
-      // Remove old logo if it exists
-      const existingLogo = document.querySelector('.logo-preview');
-      if (existingLogo) existingLogo.remove();
+    newUmbrella.onload = () => {
+     
+      setTimeout(() => {
+        umbrellaImg.src = newUmbrella.src;
 
-      // Reattach uploaded logo (if any)
-      if (uploadedLogo) {
-        const logo = document.createElement('img');
-        logo.src = uploadedLogo;
-        logo.classList.add('logo-preview');
-        logo.style.visibility = 'hidden'; // hidden until loader ends
-        umbrellaImg.parentElement.appendChild(logo);
-      }
+        const existingLogo = document.querySelector('.logo-preview');
+        if (existingLogo) existingLogo.remove();
 
-      hideLoader();
-    }, 1500); // simulate loading delay
+        if (uploadedLogo) {
+          const logo = document.createElement('img');
+          logo.src = uploadedLogo;
+          logo.classList.add('logo-preview');
+          umbrellaImg.parentElement.appendChild(logo);
+        }
+        hideLoader();
+      }, 1000); 
+    };
   });
 });
 
-// === Handle logo upload ===
 uploadBtn.addEventListener('click', () => logoInput.click());
 
 logoInput.addEventListener('change', (e) => {
@@ -65,17 +62,14 @@ logoInput.addEventListener('change', (e) => {
   if (!file) return;
 
   const reader = new FileReader();
-
   showLoader(currentColor);
 
   reader.onload = (event) => {
-    uploadedLogo = event.target.result; // store logo data
+    uploadedLogo = event.target.result;
 
     setTimeout(() => {
-      // Hide loader, show umbrella again
       hideLoader();
 
-      // Remove existing logo if any
       const existingLogo = document.querySelector('.logo-preview');
       if (existingLogo) existingLogo.remove();
 
@@ -83,7 +77,7 @@ logoInput.addEventListener('change', (e) => {
       logo.src = uploadedLogo;
       logo.classList.add('logo-preview');
       umbrellaImg.parentElement.appendChild(logo);
-    }, 1500);
+    }, 1200);
   };
 
   reader.readAsDataURL(file);
