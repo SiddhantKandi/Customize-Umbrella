@@ -4,24 +4,61 @@ const colorCircles = document.querySelectorAll('.color-circle');
 const uploadBtn = document.getElementById('upload-btn');
 const logoInput = document.getElementById('logo-input');
 
-let currentColor = 'blue'; 
+let currentColor = 'blue'; // default umbrella color
+let uploadedLogo = null;   // stores uploaded logo image (data URL)
 
+// === Show loader (hide umbrella + logo) ===
+function showLoader(color) {
+  umbrellaImg.style.visibility = 'hidden';
+  umbrellaLoader.style.visibility = 'visible';
+  umbrellaLoader.style.filter = getColorFilter(color);
+
+  // Hide logo while loader is active
+  const existingLogo = document.querySelector('.logo-preview');
+  if (existingLogo) existingLogo.style.visibility = 'hidden';
+}
+
+// === Hide loader (show umbrella + logo if exists) ===
+function hideLoader() {
+  umbrellaLoader.style.visibility = 'hidden';
+  umbrellaImg.style.visibility = 'visible';
+
+  const existingLogo = document.querySelector('.logo-preview');
+  if (existingLogo) existingLogo.style.visibility = 'visible';
+}
+
+// === Handle color change ===
 colorCircles.forEach(circle => {
   circle.addEventListener('click', () => {
     const color = circle.dataset.color;
     currentColor = color;
 
-    umbrellaImg.style.opacity = 0;
+    showLoader(color);
+
     setTimeout(() => {
+      // Change umbrella image
       umbrellaImg.src = `public/${color}_umbrella.png`;
-      umbrellaImg.style.opacity = 1;
-    }, 200);
+
+      // Remove old logo if it exists
+      const existingLogo = document.querySelector('.logo-preview');
+      if (existingLogo) existingLogo.remove();
+
+      // Reattach uploaded logo (if any)
+      if (uploadedLogo) {
+        const logo = document.createElement('img');
+        logo.src = uploadedLogo;
+        logo.classList.add('logo-preview');
+        logo.style.visibility = 'hidden'; // hidden until loader ends
+        umbrellaImg.parentElement.appendChild(logo);
+      }
+
+      hideLoader();
+    }, 1500); // simulate loading delay
   });
 });
 
-
+// === Handle logo upload ===
 uploadBtn.addEventListener('click', () => logoInput.click());
-
 
 logoInput.addEventListener('change', (e) => {
   const file = e.target.files[0];
@@ -29,32 +66,28 @@ logoInput.addEventListener('change', (e) => {
 
   const reader = new FileReader();
 
-  
-  umbrellaImg.style.display = 'none';
-  umbrellaLoader.style.display = 'block';
-  umbrellaLoader.style.filter = getColorFilter(currentColor); 
+  showLoader(currentColor);
 
   reader.onload = (event) => {
-    setTimeout(() => {
-      
-      umbrellaLoader.style.display = 'none';
-      umbrellaImg.style.display = 'block';
+    uploadedLogo = event.target.result; // store logo data
 
-      
+    setTimeout(() => {
+      // Hide loader, show umbrella again
+      hideLoader();
+
+      // Remove existing logo if any
       const existingLogo = document.querySelector('.logo-preview');
       if (existingLogo) existingLogo.remove();
 
-      
       const logo = document.createElement('img');
-      logo.src = event.target.result;
+      logo.src = uploadedLogo;
       logo.classList.add('logo-preview');
       umbrellaImg.parentElement.appendChild(logo);
-    }, 1500); 
+    }, 1500);
   };
 
   reader.readAsDataURL(file);
 });
-
 
 function getColorFilter(color) {
   switch (color) {
