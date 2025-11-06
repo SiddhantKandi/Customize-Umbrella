@@ -67,7 +67,7 @@ logoInput.addEventListener('change', (e) => {
     if (file) {
         if (file.size > MAX_FILE_SIZE) {
             errorMessage.textContent = 'File size exceeds 5MB limit. Please choose a smaller file.';
-            e.target.value = ''; // Clear the file input
+            e.target.value = '';
             return;
         }
 
@@ -77,8 +77,7 @@ logoInput.addEventListener('change', (e) => {
             return;
         }
 
-        errorMessage.textContent = ''; // Clear any error messages
-        // Process the valid file here
+        errorMessage.textContent = ''; 
         handleLogoUpload(file);
     }
 });
