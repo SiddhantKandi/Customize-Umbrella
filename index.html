@@ -9,11 +9,7 @@
   <body>
     <div class="main-container">
       <div class="umbrella-section">
-        <img
-          id="umbrella-image"
-          src="public/blue_umbrella.png"
-          alt="Umbrella"
-        />
+        <img id="umbrella-image" src="public/blue_umbrella.png" alt="Umbrella" />
         <img id="umbrella-loader" src="public/loader_icon.svg" alt="Loader" />
       </div>
 
@@ -21,21 +17,9 @@
         <h1>Custom Umbrella</h1>
 
         <div class="color-options">
-          <button
-            class="color-circle"
-            data-color="blue"
-            style="background: #009fe3"
-          ></button>
-          <button
-            class="color-circle"
-            data-color="yellow"
-            style="background: #ffcc00"
-          ></button>
-          <button
-            class="color-circle"
-            data-color="pink"
-            style="background: #ff2d55"
-          ></button>
+          <button class="color-circle" data-color="blue" style="background: #009fe3"></button>
+          <button class="color-circle" data-color="yellow" style="background: #ffcc00"></button>
+          <button class="color-circle" data-color="pink" style="background: #ff2d55"></button>
         </div>
 
         <div class="upload-section">
@@ -48,36 +32,31 @@
           </div>
 
           <div class="button-container">
-            <button
-              id="upload-btn"
-              class="primary-btn tooltip"
-              data-tooltip="Upload your company or custom logo"
-            >
-              <img
-                src="public/upload_icon.svg"
-                alt="upload icon"
-                class="upload-icon"
-              />
+            <button id="upload-btn" class="primary-btn tooltip" data-tooltip="Upload your logo">
+              <img src="public/upload_icon.svg" alt="upload icon" class="upload-icon" />
               Upload Logo
             </button>
 
             <button
               id="download-btn"
-              class="secondary-btn tooltip"
-              data-tooltip="Download your customized umbrella as an image"
+              class="primary-btn tooltip"
+              data-tooltip="Download your customized umbrella"
             >
-              <span class="icon">⬇️</span>
-              Download Preview
+              ⬇️ Download Preview
+            </button>
+
+            <button
+              id="remove-btn"
+              class="primary-btn tooltip"
+              data-tooltip="Upload a logo to enable the button"
+              disabled
+            >
+              ❌ Remove Logo
             </button>
           </div>
 
           <p id="error-message" class="error-text"></p>
-          <input
-            type="file"
-            id="logo-input"
-            accept="image/png, image/jpeg"
-            hidden
-          />
+          <input type="file" id="logo-input" accept="image/png, image/jpeg" hidden />
         </div>
       </div>
     </div>

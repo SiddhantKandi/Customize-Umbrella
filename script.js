@@ -2,14 +2,13 @@ const umbrellaImg = document.getElementById('umbrella-image');
 const umbrellaLoader = document.getElementById('umbrella-loader');
 const colorCircles = document.querySelectorAll('.color-circle');
 const uploadBtn = document.getElementById('upload-btn');
+const removeBtn = document.getElementById('remove-btn');
 const logoInput = document.getElementById('logo-input');
-const saveBtn = document.getElementById('save-btn');
 const downloadBtn = document.getElementById('download-btn');
 const errorMessage = document.getElementById('error-message');
 
 let currentColor = 'blue';
 let uploadedLogo = null;
-
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 function showLoader(color) {
@@ -28,18 +27,31 @@ function hideLoader() {
 }
 
 
+function updateButtonStates(hasLogo) {
+    removeBtn.disabled = !hasLogo;
+    uploadBtn.disabled = hasLogo;
+
+    if (hasLogo) {
+        removeBtn.setAttribute('data-tooltip', 'Remove uploaded logo from umbrella');
+        uploadBtn.setAttribute('data-tooltip', 'Remove current logo to upload a new one');
+    } else {
+        removeBtn.setAttribute('data-tooltip', 'Upload a logo to enable this');
+        uploadBtn.setAttribute('data-tooltip', 'Upload a logo to customize your umbrella');
+    }
+}
+
 colorCircles.forEach(circle => {
     circle.addEventListener('click', () => {
         const color = circle.dataset.color;
         currentColor = color;
-
         showLoader(color);
+
         const newUmbrella = new Image();
         newUmbrella.src = `public/${color}_umbrella.png`;
-
         newUmbrella.onload = () => {
             setTimeout(() => {
                 umbrellaImg.src = newUmbrella.src;
+
                 const oldLogo = document.querySelector('.logo-preview');
                 if (oldLogo) oldLogo.remove();
 
@@ -49,48 +61,54 @@ colorCircles.forEach(circle => {
                     logo.classList.add('logo-preview');
                     umbrellaImg.parentElement.appendChild(logo);
                 }
+
                 hideLoader();
             }, 1000);
         };
     });
 });
 
+uploadBtn.addEventListener('click', () => logoInput.click());
 
-uploadBtn.addEventListener('click', () => {
-    document.getElementById('logo-input').click();
+removeBtn.addEventListener('click', () => {
+    const logo = document.querySelector('.logo-preview');
+    if (logo) logo.remove();
+    uploadedLogo = null;
+    logoInput.value = '';
+    updateButtonStates(false);
 });
 
-logoInput.addEventListener('change', (e) => {
+logoInput.addEventListener('change', e => {
     const file = e.target.files[0];
-    const errorMessage = document.getElementById('error-message');
+    if (!file) return;
 
-    if (file) {
-        if (file.size > MAX_FILE_SIZE) {
-            errorMessage.textContent = 'File size exceeds 5MB limit. Please choose a smaller file.';
-            e.target.value = '';
-            return;
-        }
-
-        if (!['image/jpeg', 'image/png'].includes(file.type)) {
-            errorMessage.textContent = 'Please select only .jpg or .png files.';
-            e.target.value = '';
-            return;
-        }
-
-        errorMessage.textContent = ''; 
-        handleLogoUpload(file);
+    if (file.size > MAX_FILE_SIZE) {
+        errorMessage.textContent = 'File size exceeds 5MB limit.';
+        e.target.value = '';
+        updateButtonStates(false);
+        return;
     }
+
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+        errorMessage.textContent = 'Please select only .jpg or .png files.';
+        e.target.value = '';
+        updateButtonStates(false);
+        return;
+    }
+
+    errorMessage.textContent = '';
+    handleLogoUpload(file);
 });
 
 function handleLogoUpload(file) {
     showLoader(currentColor);
-
     const reader = new FileReader();
+
     reader.onload = event => {
         uploadedLogo = event.target.result;
-
         setTimeout(() => {
             hideLoader();
+
             const oldLogo = document.querySelector('.logo-preview');
             if (oldLogo) oldLogo.remove();
 
@@ -98,11 +116,13 @@ function handleLogoUpload(file) {
             logo.src = uploadedLogo;
             logo.classList.add('logo-preview');
             umbrellaImg.parentElement.appendChild(logo);
-        }, 1200);
+
+            updateButtonStates(true);
+        }, 1000);
     };
+
     reader.readAsDataURL(file);
 }
-
 
 downloadBtn.addEventListener('click', () => {
     const umbrellaContainer = document.querySelector('.umbrella-section');
@@ -112,36 +132,6 @@ downloadBtn.addEventListener('click', () => {
         link.href = canvas.toDataURL('image/png');
         link.click();
     });
-});
-
-
-saveBtn.addEventListener('click', () => {
-    const design = {
-        color: currentColor,
-        logo: uploadedLogo,
-    };
-    localStorage.setItem('umbrellaDesign', JSON.stringify(design));
-    alert('✅ Design saved successfully!');
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-    const savedDesign = localStorage.getItem('umbrellaDesign');
-    if (!savedDesign) return;
-
-    const { color, logo } = JSON.parse(savedDesign);
-    currentColor = color;
-    uploadedLogo = logo;
-
-
-    umbrellaImg.src = `public/${color}_umbrella.png`;
-
-
-    if (uploadedLogo) {
-        const logoImg = document.createElement('img');
-        logoImg.src = uploadedLogo;
-        logoImg.classList.add('logo-preview');
-        umbrellaImg.parentElement.appendChild(logoImg);
-    }
 });
 
 function getColorFilter(color) {
@@ -155,3 +145,7 @@ function getColorFilter(color) {
             return 'invert(41%) sepia(93%) saturate(2127%) hue-rotate(175deg) brightness(95%) contrast(102%)';
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateButtonStates(false);
+});
