@@ -1,6 +1,6 @@
 body {
   background: linear-gradient(135deg, #74ebd5, #acb6e5);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
@@ -18,7 +18,7 @@ body {
 
 .umbrella-section {
   position: relative;
-  width: 300px;   
+  width: 300px;
   height: 300px;
   display: flex;
   justify-content: center;
@@ -47,86 +47,339 @@ body {
   opacity: 0.9;
 }
 
-.customization-section h1 {
-  font-size: 2rem;
-  color: #222;
-  margin-bottom: 20px;
+.customization-section {
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem; /* Reduced from 2rem */
+  text-align: center;
 }
 
 .color-options {
   display: flex;
-  gap: 10px;
-  margin-bottom: 25px;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem; /* Reduced from 3rem */
 }
 
 .color-circle {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  border: none;
   cursor: pointer;
-  border: 2px solid transparent;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .color-circle:hover {
   transform: scale(1.1);
-  border-color: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .upload-section {
-  text-align: left;
+  text-align: center;
+  margin-top: 1rem; /* Reduced from 2rem */
 }
 
-.upload-section p {
-  font-size: 0.9rem;
+.section-title,
+.upload-ins {
   color: #333;
-  margin: 4px 0;
+  line-height: 1.4; /* Reduced from 1.6 */
+  margin: 0;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 2px; /* Reduced from 4px */
 }
 
 .upload-ins {
-  margin-bottom: 15px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem; /* Reduced from 1rem */
+  align-items: center;
+  margin-top: 1rem; /* Reduced from 2rem */
+}
+
+.primary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.5rem;
+  width: 220px; /* Fixed width for both buttons */
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #009fe3, #0086bf);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 159, 227, 0.3);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 159, 227, 0.4);
+  background: linear-gradient(145deg, #0086bf, #007ab3);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 159, 227, 0.3);
+}
+
+.primary-btn img,
+.primary-btn .icon {
+  width: 20px;
+  height: 20px;
 }
 
 #upload-btn {
+  background: linear-gradient(145deg, #2ecc71, #27ae60);
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
+}
+
+#upload-btn:hover {
+  background: linear-gradient(145deg, #27ae60, #219a52);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+}
+
+.error-text {
+  color: #ff3333;
+  font-size: 0.9rem;
+  text-align: center;
+  min-height: 20px;
+  margin-top: 0.8rem; /* Reduced from 1rem */
+  font-weight: 500;
+}
+
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background: #009fe3;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:hover {
+  background: #0086bf;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn .icon {
+  font-size: 20px;
+}
+
+.action-btn .btn-text {
+  font-family: Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+#save-btn {
+  background: #4caf50;
+}
+
+#save-btn:hover {
+  background: #45a049;
+}
+
+#download-btn {
+  background: #2196f3;
+}
+
+#download-btn:hover {
+  background: #1976d2;
+}
+
+.upload-section {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.upload-title {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.upload-ins {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.2rem; /* small gap before buttons */
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#upload-btn,
+#download-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background-color: #009fe3;
+  padding: 14px 28px;
   border: none;
-  color: white;
-  padding: 14px 24px;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 10px;
   font-size: 1rem;
   font-weight: 600;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+#upload-btn {
+  background: linear-gradient(135deg, #009fe3, #0078b9);
 }
 
 #upload-btn:hover {
-  background-color: #007bbf;
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #008ad0, #006ea5);
+  transform: translateY(-2px);
+}
+
+#download-btn {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+}
+
+#download-btn:hover {
+  background: linear-gradient(135deg, #45a049, #256b28);
+  transform: translateY(-2px);
 }
 
 .upload-icon {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   filter: brightness(0) invert(1);
+}
+
+#download-btn .icon {
+  font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  .button-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .primary-btn {
+    width: 220px; /* Keep consistent width on desktop */
+  }
 }
 
 .logo-preview {
   position: absolute;
-  width: 50px;
-  bottom: 13%;
+  width: 50px; /* Reduced size for better proportion */
+  bottom: 13%; /* Places logo on the bottom V section */
   left: 50%;
   transform: translateX(-50%);
   opacity: 0.9;
   pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-@keyframes spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+/* === Tooltip Styling === */
+.tooltip {
+  position: relative;
+  overflow: visible;
 }
+
+/* Tooltip bubble */
+.tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 8px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Tooltip arrow */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease;
+}
+
+/* Show tooltip on hover */
+.tooltip:hover::before,
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Add a little motion */
+.tooltip:hover::before {
+  transform: translateX(-50%) translateY(-4px);
+}
+
+
+
+
