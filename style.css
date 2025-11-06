@@ -16,12 +16,30 @@ body {
   gap: 60px;
 }
 
-.umbrella-section img {
+
+.umbrella-section {
+  position: relative;
+}
+
+#umbrella-image {
   width: 300px;
   transition: opacity 0.3s ease-in-out;
 }
 
-.customization-umbrella-section h1 {
+
+#umbrella-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  transform: translate(-50%, -50%);
+  display: none;
+  animation: spin 1s linear infinite;
+  opacity: 0.9;
+}
+
+
+.customization-section h1 {
   font-size: 2rem;
   color: #222;
   margin-bottom: 20px;
@@ -61,6 +79,7 @@ body {
   margin-bottom: 15px;
 }
 
+
 #upload-btn {
   display: flex;
   align-items: center;
@@ -87,4 +106,21 @@ body {
   width: 20px;
   height: 20px;
   filter: brightness(0) invert(1);
+}
+
+.logo-preview {
+  position: absolute;
+  width: 70px;
+  bottom: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.9;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
